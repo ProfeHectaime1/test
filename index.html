@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Thumbnail Fix: Split Method</title>
+    <style>
+        body { background: #0a0a0a; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px; }
+        .slider-container { position: fixed; left: 50px; top: 50%; transform: translateY(-50%) rotate(-90deg); width: 400px; }
+        .image-container { margin-top: 20px; border-radius: 12px; overflow: hidden; border: 2px solid #333; }
+        img { width: 100%; display: block; }
+        .status { margin-bottom: 20px; color: #f1c40f; font-family: monospace; background: #222; padding: 15px; border-radius: 5px; width: 90%; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <h1>Método Split & Rebuild</h1>
+    <div class="status" id="urlDisplay">Mueve el slider...</div>
+
+    <div class="slider-container">
+        <input type="range" min="150" max="1000" value="220" id="sizeSlider">
+    </div>
+
+    <div class="image-container" id="wrapper" style="width: 220px;">
+        <img id="testImage" src="https://lh3.googleusercontent.com/drive-storage/AJQWtBMUAamD_GY0K6hwEB2t7_DEMU54sX-cWmnUdf9B-ndSs2_XwRmHQa4_K45xvUMkeSwZdcoiR5mxcdp33EAiAfLCfH23VRttePd1IYuu10H90WE=s220">
+    </div>
+
+    <script>
+        const slider = document.getElementById('sizeSlider');
+        const img = document.getElementById('testImage');
+        const wrapper = document.getElementById('wrapper');
+        const urlDisplay = document.getElementById('urlDisplay');
+
+        // Capture the initial URL once when the page loads
+        let initialUrl = img.src; 
+
+        slider.addEventListener('input', function() {
+            const size = this.value;
+            
+            // 1. SPLIT the URL at "=s"
+            // If the URL is "site.com/img=s220", parts[0] will be "site.com/img"
+            let parts = initialUrl.split('=s');
+            let baseUrl = parts[0];
+
+            // 2. REBUILD the URL with the new size
+            const newUrl = baseUrl + "=s" + size;
+            
+            // 3. UPDATE the image and display
+            img.src = newUrl;
+            wrapper.style.width = size + 'px';
+            urlDisplay.innerText = "Base: " + baseUrl + "\nURL Final: " + newUrl;
+        });
+    </script>
+</body>
+</html>
