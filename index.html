@@ -2,42 +2,41 @@
 <html>
 <head>
     <style>
-        /* 1. The Container: This acts as the "Clipper" */
-        .video-clipper {
-            width: 640px;  /* Match your desired width */
-            height: 360px; /* Shorter than 480 to hide the top/bottom bars */
+        /* This hides the UI perfectly as we did before */
+        .video-box {
+            width: 640px;
+            height: 360px;
             overflow: hidden;
             position: relative;
             background: #000;
-            border-radius: 8px;
         }
 
-        /* 2. The Iframe: Positioned to push UI out of view */
-        .video-clipper iframe {
+        video {
             position: absolute;
-            top: -65px;    /* Pushes the Google Title bar UP out of view */
-            left: -5px;
-            width: 650px;  /* Slightly wider to hide side shadows */
-            height: 520px; /* Taller to ensure the bottom bar is pushed DOWN */
-            border: none;
-        }
-
-        /* 3. The Instruction Layer (Optional) */
-        .hint {
-            color: white;
-            font-family: sans-serif;
-            text-align: center;
-            margin-top: 10px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <div class="video-clipper">
-        <iframe src="https://drive.google.com/file/d/1S-wxQWsoYA6D7DmLeIDg6Ssm2kZu97Cb/preview"></iframe>
+    <div class="video-box">
+        <video autoplay muted loop playsinline id="myAnim">
+            <source src="https://drive.google.com/uc?export=download&id=1S-wxQWsoYA6D7DmLeIDg6Ssm2kZu97Cb" type="video/webm">
+            Tu navegador no soporta el video.
+        </video>
     </div>
 
-    <p class="hint">Click inside the box to play animation</p>
-
+    <script>
+        // This script "pokes" the video to make sure it starts immediately
+        const video = document.getElementById('myAnim');
+        video.play().catch(() => {
+            // If the browser blocks it, it will try again as soon as the user scrolls or clicks
+            window.addEventListener('click', () => video.play(), { once: true });
+        });
+    </script>
 </body>
 </html>
