@@ -2,31 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Video Preview</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
-        video { width: 100%; height: 100%; object-fit: cover; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent; /* Or #000 */
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This makes it fill the card/screen */
+            pointer-events: none; /* Prevents users from clicking/pausing it */
+        }
     </style>
 </head>
 <body>
 
-    <video id="myVideo" autoplay muted loop playsinline>
+    <video id="v" autoplay muted loop playsinline>
         <source src="https://www.googleapis.com/drive/v3/files/1AJ5mUC--flx2QPFCPAkA_1pceo5zpmQg?alt=media" type="video/webm">
-        Tu navegador no soporta el video.
     </video>
 
     <script>
-        // Browsers sometimes block autoplay even when muted. 
-        // This script forces the video to try and play again after the page loads.
-        window.addEventListener('load', function() {
-            var v = document.getElementById('myVideo');
-            v.play().catch(function(error) {
-                console.log("Autoplay was prevented. Click anywhere to play.");
-                // If it fails, play it as soon as the user interacts with the page
-                document.body.addEventListener('click', function() {
-                    v.play();
-                }, { once: true });
-            });
+        // Force the video to start even if the browser tries to pause it
+        const vid = document.getElementById('v');
+        vid.play().catch(() => {
+            // If autoplay fails, it tries again every 1 second until it works
+            const retry = setInterval(() => {
+                vid.play().then(() => clearInterval(retry));
+            }, 1000);
         });
     </script>
 </body>
