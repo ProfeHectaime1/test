@@ -2,59 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Visualizador WebM - Google Drive</title>
+    <title>Video Player</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        video {
-            max-width: 100%;
-            max-height: 100%;
-        }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        video { width: 100%; max-width: 800px; }
     </style>
 </head>
 <body>
 
-    <div id="videoContainer">
-        </div>
+    <video autoplay muted loop playsinline controls>
+        <source src="https://drive.google.com/get_video_info?docid=1AJ5mUC--flx2QPFCPAkA_1pceo5zpmQg" type="video/webm">
+        Tu navegador no soporta este video.
+    </video>
 
-    <script>
-        // 1. PASTE YOUR GOOGLE DRIVE URL HERE
-        const driveUrl = "https://drive.google.com/get_video_info?docid=1AJ5mUC--flx2QPFCPAkA_1pceo5zpmQg";
-
-        // 2. Function to extract ID and create the stream link
-        function playDriveVideo(url) {
-            const container = document.getElementById('videoContainer');
-            
-            // Extract the ID from the URL using Regex
-            const match = url.match(/[-\w]{25,}/);
-            
-            if (match && match[0]) {
-                const driveID = match[0];
-                // Using the API endpoint which is best for streaming WebM
-                const streamUrl = `https://www.googleapis.com/drive/v3/files/${driveID}?alt=media`;
-
-                container.innerHTML = `
-                    <video autoplay muted loop playsinline controls>
-                        <source src="${streamUrl}" type="video/webm">
-                        Tu navegador no soporta el formato WebM.
-                    </video>
-                `;
-            } else {
-                container.innerHTML = "<p style='color:white;'>Error: ID de Drive no encontrado.</p>";
-            }
-        }
-
-        // Run the function
-        playDriveVideo(driveUrl);
-    </script>
 </body>
 </html>
