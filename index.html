@@ -2,18 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Video Player</title>
+    <title>Video Preview</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        video { width: 100%; max-width: 800px; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
+        video { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop playsinline controls>
-        <source src="https://drive.google.com/get_video_info?docid=1AJ5mUC--flx2QPFCPAkA_1pceo5zpmQg" type="video/webm">
-        Tu navegador no soporta este video.
+    <video id="myVideo" autoplay muted loop playsinline>
+        <source src="https://www.googleapis.com/drive/v3/files/1AJ5mUC--flx2QPFCPAkA_1pceo5zpmQg?alt=media" type="video/webm">
+        Tu navegador no soporta el video.
     </video>
 
+    <script>
+        // Browsers sometimes block autoplay even when muted. 
+        // This script forces the video to try and play again after the page loads.
+        window.addEventListener('load', function() {
+            var v = document.getElementById('myVideo');
+            v.play().catch(function(error) {
+                console.log("Autoplay was prevented. Click anywhere to play.");
+                // If it fails, play it as soon as the user interacts with the page
+                document.body.addEventListener('click', function() {
+                    v.play();
+                }, { once: true });
+            });
+        });
+    </script>
 </body>
 </html>
