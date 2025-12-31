@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<html>
 <head>
     <meta charset="UTF-8">
-    <title>Drive Video Iframe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Animación GitHub</title>
     <style>
         body, html {
             margin: 0;
@@ -11,52 +11,50 @@
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #000;
-        /* 1. The Container: This acts as the "Clipper" */
-        .video-clipper {
-            width: 640px;  /* Match your desired width */
-            height: 360px; /* Shorter than 480 to hide the top/bottom bars */
-            overflow: hidden;
-            position: relative;
-            background: #000;
-            border-radius: 8px;
-        }
-        /* Style for the iframe to ensure it shows at the size you specified */
-        iframe {
-
-        /* 2. The Iframe: Positioned to push UI out of view */
-        .video-clipper iframe {
-            position: absolute;
-            top: -65px;    /* Pushes the Google Title bar UP out of view */
-            left: -5px;
-            width: 650px;  /* Slightly wider to hide side shadows */
-            height: 520px; /* Taller to ensure the bottom bar is pushed DOWN */
-            border: none;
-        }
-
-        /* 3. The Instruction Layer (Optional) */
-        .hint {
-            color: white;
+            background-color: #121212; /* Fondo oscuro elegante */
             font-family: sans-serif;
-            text-align: center;
-            margin-top: 10px;
+        }
+
+        .container {
+            width: 720px; /* Tamaño basado en tu URL */
+            max-width: 90%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #333;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover; /* Llena el espacio sin deformar */
+        }
+
+        .status {
+            color: #aaa;
+            margin-top: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <iframe 
-        src="https://drive.google.com/file/d/1S-wxQWsoYA6D7DmLeIDg6Ssm2kZu97Cb/preview" 
-        width="640" 
-        height="480">
-    </iframe>
-    <div class="video-clipper">
-        <iframe src="https://drive.google.com/file/d/1S-wxQWsoYA6D7DmLeIDg6Ssm2kZu97Cb/preview"></iframe>
+    <div class="container">
+        <video autoplay muted loop playsinline>
+            <source src="https://profehectaime1.github.io/pHWeb-assets/Entradas/pH_Entradas/720/Appear.webm" type="video/webm">
+            Tu navegador no soporta el formato de video WebM.
+        </video>
     </div>
 
-    <p class="hint">Click inside the box to play animation</p>
+    <div class="status">
+        Archivo: Appear.webm | Fuente: GitHub Pages
+    </div>
 
 </body>
 </html>
